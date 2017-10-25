@@ -3,7 +3,7 @@ var Sequelize = require('sequelize');
 var seqConn = null;
 var sequelize = function(){
 		if(seqConn==null){
-			console.log('创建连接');
+			console.log('sequelize connected');
 			seqConn=new Sequelize('bullup', 'root', '123456', {
 			    host: '67.216.196.197',
 				dialect: 'mysql',

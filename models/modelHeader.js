@@ -4,7 +4,7 @@ var seqConn = null;
 var sequelize = function(){
 		if(seqConn==null){
 			console.log('创建连接');
-			seqConn=new Sequelize('bullup', null, null, {
+			seqConn=new Sequelize('bullup','root','123456', {
 			    host: '67.216.196.197',
 				dialect: 'mysql',
 				dialectOptions: {

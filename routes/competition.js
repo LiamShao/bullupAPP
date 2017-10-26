@@ -9,9 +9,10 @@ router.get('/', function(req, res, next) {
 });
 
 //技巧
-//http://192.168.2.162:3000/competition/getCompetitions
+//http://192.168.2.162:3000/competition/getCompetitions?page=*
 router.get('/getCompetitions',function(req,res,next){
-    competitionUtil.getCompetitions(function(results){
+    var params = URL.parse(req.url,true).query;
+    competitionUtil.getCompetitions(params,function(results){
     if(results){
       for (let i=0;i<results.length;i++){
         if(results[i].bullup_competition_picture!=null&&results[i].bullup_competition_picture.length!=0){
@@ -28,7 +29,12 @@ router.get('/getCompetitions',function(req,res,next){
       results.sort(function(a,b){ 
         return a['bullup_competition_time'] < b['bullup_competition_time'] ? 1 : a['bullup_competition_time'] == b['bullup_competition_time'] ? 0 : -1;
       });
-      res.send(results);
+      let temp = {};
+      temp.status = 1;
+      temp.data = results;
+      res.send(temp);
+    }else{
+      res.send({"status":0,"data":[]});
     }
   });
 });

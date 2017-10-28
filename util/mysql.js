@@ -5,7 +5,11 @@ var connection = mysql.createConnection({
   password : '',       
   port: '3306',                   
   database: 'discuz', 
+  dateStrings: true
+
 }); 
+	
+
 connection.connect(function(err) {
     if (err) {
         console.error('error connecting: ' + err.stack);

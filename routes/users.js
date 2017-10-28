@@ -4,7 +4,6 @@ var URL = require('url');
 var sequelize = require('../models/modelHeader.js')();
 var userBaseModel = require('../models/user_base_model.js');
 var bullupProfileModel = require('../models/bullup_profile_model.js');
-var mysql = require('../models/mysql.js');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {

@@ -10,6 +10,7 @@ exports.getNews = function(data,callback) {
     }else{
         start=pageNum*10-10;
     }
+    console.log(start);
     connection.query('select * from bullup_app_news order by bullup_publish_time desc limit ?,10',[start],function (err, results){
         if (err) throw err;
         callback(results);

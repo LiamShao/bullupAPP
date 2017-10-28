@@ -43,7 +43,11 @@ router.get('/getGameHistory',function(req,res,next){
     if(rs[0]!=null&&rs[0].length!=0){
       let temp = {};
       temp.status = 1;
-      temp.data = rs[0];
+      let tmpData = rs[0];
+      tmpData.sort(function(a,b){ 
+        return a['bullup_battle_time'] < b['bullup_battle_time'] ? 1 : a['bullup_battle_time'] == b['bullup_battle_time'] ? 0 : -1;
+      });
+      temp.data = tmpData;
       res.send(temp);
     }else{
       res.send({"status":0,"text":"您的对战记录为空"});
@@ -62,7 +66,11 @@ router.get('/getGameHistoryByDate',function(req,res,next){
     if(rs[0]!=null&&rs[0].length!=0){
       let temp = {};
       temp.status = 1;
-      temp.data = rs[0];
+      let tmpData = rs[0];
+      tmpData.sort(function(a,b){ 
+        return a['bullup_battle_time'] < b['bullup_battle_time'] ? 1 : a['bullup_battle_time'] == b['bullup_battle_time'] ? 0 : -1;
+      });
+      temp.data = tmpData;
       res.send(temp);
     }else{
       res.send({"status":0,"text":"您的对战记录为空"});

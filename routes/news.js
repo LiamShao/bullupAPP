@@ -23,7 +23,7 @@ router.get('/getNews',function(req,res,next){
             results[i].bullup_news_picture[j] = 'http://192.168.2.162:3000/'+results[i].bullup_news_picture[j];
           }
         }else{
-          results[i].bullup_news_picture = "";
+          results[i].bullup_news_picture = [];
         }
       }
       results.sort(function(a,b){ 

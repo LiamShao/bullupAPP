@@ -8,8 +8,10 @@ var sequelize = function(){
 			    host: '67.216.196.197',
 				dialect: 'mysql',
 				dialectOptions: {
-					charset: 'utf8'
+					charset: 'utf8',
+					timezone: '+08:00'
 				 },
+				//timezone: '+08:00'
 			});
 		}
 		return seqConn;

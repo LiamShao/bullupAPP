@@ -7,27 +7,54 @@ exports.insertPosting = function(data,callback) {
     });
 }
 //查询全部帖子
-exports.showPosting = function(callback){
-     connection.query('select * from bullup_app_article  order by  bullup_dateline  desc', function (err, results){
+exports.showPosting = function(data,callback){
+    let pageNum=data
+    var start;
+    if(pageNum == 1){
+        start= 0;
+    }else{
+        start=pageNum*10-10;
+    }
+     connection.query('select * from bullup_app_article  order by  bullup_dateline  limit ?,10',[start],function (err, results){
             if (err) throw err;
             callback(results);
 });
 }
 //查询精选帖子
-exports.choicenessPosting = function(callback){
-     connection.query('select * from bullup_app_article where bullup_article_flag=1', function (err, results){
+exports.choicenessPosting = function(data,callback){
+    let pageNum = data
+    var start;
+    if (pageNum == 1) {
+        start = 0;
+    } else {
+        start = pageNum * 10 - 10;
+    }
+     connection.query('select * from bullup_app_article where bullup_article_flag=1 limit ?,10',[start], function (err, results){
             if (err) throw err;
             callback(results);
      });
     }
 //查询热门帖子
-exports.hotPosting = function(callback){
+exports.hotPosting = function(data,callback){
     //评论数最多的前十个帖子
      connection.query('select *,count(*) from bullup_app_article t1 left join bullup_app_comments t2 on t1.bullup_article_id=t2.bullup_article_id group  by t1.bullup_article_id order by count(*) desc limit 10;',function(err,results){
             if (err) throw err;
             callback(results);
      }) 
-        
+//我的帖子 
+exports.MyPosting = function(data,callback){
+    let pageNum = data.page;
+    var start;
+    if (pageNum == 1) {
+        start = 0;
+    } else {
+        start = pageNum * 10 - 10;
+    }
+     connection.query('select * from bullup_app_article where bullup_author_id=?',[data.userId,start], function (err, results){
+            if (err) throw err;
+            callback(results);
+     });
+    }
 // select bullup_app_article.*,count(*) from bullup_app_article t1 left join bullup_app_comments t2 on t1.bullup_article_id=t2.bullup_article_id group  by t1.bullup_article_id order by count(*) desc limit 10;
 }
 //评论
@@ -40,15 +67,21 @@ exports.insertComment = function(data,callback){
 //评论查询
 exports.getComment = function(data,callback){
     // console.log(data.userid);
-
-     connection.query('select * from bullup_app_comments where bullup_article_id=?  ',[data],function (err, results){
+     connection.query('select * from bullup_app_comments where bullup_article_id=?  order by  bullup_comment_time  desc limit 5',[data],function (err, results){
             if (err) throw err;
             callback(results);
      });
 }
 //评论详情
 exports.getAllComment = function(data,callback){
-     connection.query('select  *,count(*) from bullup_app_comments where bullup_article_id=?',[data],function (err, results){
+    let pageNum = data.page
+    var start;
+    if (pageNum == 1) {
+        start = 0;
+    } else {
+        start = pageNum * 10 - 10;
+    }
+     connection.query('select  *,count(*) from bullup_app_comments where bullup_article_id=?  limit ?,10',[data.articleid,start],function (err, results){
             if (err) throw err;
             callback(results);
      });
@@ -62,18 +95,32 @@ exports.insertReply = function(data,callback){
 }
 //回复查询
 exports.getReply = function(data,callback){
-     connection.query('select * from bullup_app_reply where bullup_comment_id=?',[data],function (err, results){
+    let pageNum = data.page
+    var start;
+    if (pageNum == 1) {
+        start = 0;
+    } else {
+        start = pageNum * 10 - 10;
+    }
+     connection.query('select * from bullup_app_reply where bullup_comment_id=?  limit 5',[data.articleid,start],function (err, results){
             if (err) throw err;
             callback(results);
      });
 }
-//回复详情
-exports.getAllReply = function(data,callback){
-     connection.query('select  *,count(*) from bullup_app_reply where bullup_article_id=?',[data],function (err, results){
-            if (err) throw err;
-            callback(results);
-     });
-}
+// //回复详情
+// exports.getAllReply = function(data,callback){
+//     let pageNum = data.page
+//     var start;
+//     if (pageNum == 1) {
+//         start = 0;
+//     } else {
+//         start = pageNum * 10 - 10;
+//     }
+//      connection.query('select  *,count(*) from bullup_app_reply where bullup_article_id=? limit ?,10',[data.articleid,start],function (err, results){
+//             if (err) throw err;
+//             callback(results);
+//      });
+// }
 
 
 // connection.end();

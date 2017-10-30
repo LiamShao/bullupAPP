@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 //http://192.168.2.162:3000/reply/getReply
 router.get('/getReply',function(req,res,next){
 var data = URL.parse(req.url,true).query;
-    discuzUtil.getReply(data.commentId,function(results){
+    discuzUtil.getAllReply(data,function(results){
          if(results){
              res.send({"status":1,"data":results});
         }else{
@@ -20,17 +20,17 @@ var data = URL.parse(req.url,true).query;
      
   });
 })
-//评论详情
-router.get('/getAllReply',function(req,res,next){
-    var data = URL.parse(req.url,true).query;
-    discuzUtil.getAllReply(data.articleid,function(results){
-      if(results){
-        res.send({"status":1,"data":results});
-      }else{
-         res.send({"status":0,"text":"数据库查询错误，请稍后再试!"});
-      }
-  })
-})
+// //回复详情
+// router.get('/getAllReply',function(req,res,next){
+//     var data = URL.parse(req.url,true).query;
+//     discuzUtil.getAllReply(data,function(results){
+//       if(results){
+//         res.send({"status":1,"data":results});
+//       }else{
+//          res.send({"status":0,"text":"数据库查询错误，请稍后再试!"});
+//       }
+//   })
+// })
 //回复插入
 router.get('/insertReply',function(req,res,next){
     var data = URL.parse(req.url,true).query;

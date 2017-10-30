@@ -22,7 +22,7 @@ router.get('/getComment',function(req,res,next){
 //评论详情
 router.get('/getComment',function(req,res,next){
     var data = URL.parse(req.url,true).query;
-    discuzUtil.getAllComment(data.articleid,function(results){
+    discuzUtil.getAllComment(data,function(results){
       if(results){
         res.send({"status":1,"data":results});
       }else{
@@ -45,9 +45,9 @@ router.get('/insertComment',function(req,res,next){
             return;
         } 
        fields.articleId = data.articleId;
-       fields.replyContent = data.replyContent;
+       fields.commentContent = data.commentContent;
        fields.userName = data.userName;
-       fields.replyPicture=files.articlePicture.path.replace('public','');
+       fields.commentPicture=files.commentPicture.path.replace('public','');
     discuzUtil.insertComment(fields,function(results){
          res.send({"status":1});
     });

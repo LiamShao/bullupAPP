@@ -39,7 +39,6 @@ router.get('/getGameHistory',function(req,res,next){
   let sql = 'select * from bullup_battle_record where bullup_battle_paticipants_red like ? or bullup_battle_paticipants_blue like ?';
   sequelize.query(sql,{replacements:['%'+params.nickname+'%','%'+params.nickname+'%']})
   .then(function(rs){
-    console.log(rs);
     if(rs[0]!=null&&rs[0].length!=0){
       let temp = {};
       temp.status = 1;
@@ -62,7 +61,6 @@ router.get('/getGameHistoryByDate',function(req,res,next){
   let sql = 'select * from bullup_battle_record where bullup_battle_paticipants_red like ? or bullup_battle_paticipants_blue like ? having bullup_battle_time>=? and bullup_battle_time<=?';
   sequelize.query(sql,{replacements:['%'+params.nickname+'%','%'+params.nickname+'%',params.startTime,params.endTime]})
   .then(function(rs){
-    console.log(rs);
     if(rs[0]!=null&&rs[0].length!=0){
       let temp = {};
       temp.status = 1;
@@ -77,5 +75,6 @@ router.get('/getGameHistoryByDate',function(req,res,next){
     }
   });
 });
+
 
 module.exports = router;

@@ -11,6 +11,10 @@ var news = require('./routes/news');
 var skill = require('./routes/skill');
 var competition = require('./routes/competition');
 
+var posting = require('./routes/posting');
+var comment = require('./routes/comment');
+var reply = require('./routes/reply');
+
 var app = express();
 
 // view engine setup
@@ -30,6 +34,10 @@ app.use('/users', users);
 app.use('/news', news);
 app.use('/skill', skill);
 app.use('/competition', competition);
+
+app.use('/posting', posting);
+app.use('/comment', comment);
+app.use('/reply',reply);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
